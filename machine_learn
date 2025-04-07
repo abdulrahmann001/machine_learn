@@ -1,0 +1,148 @@
+------------------------------------------------------------------------------------------------------------------------
+Import an excel file 
+
+
+Df = pd.read_excel('your_file.xlsx')
+
+------------------------------------------------------------------------------------------------------------------------
+Create data frame :
+
+
+data = {
+    'Name': ['Ali', 'Sara', 'John', 'Lara'],
+    'Email': ['ali@example.com', 'sara@gmail.com', 'john@yahoo.com', 'lara@gmail.com'],
+    'Purchase Price': [59.99, 120.50, 45.00, 75.50],
+    'Job': ['Engineer', 'Lawyer', 'Doctor', 'Teacher'],
+    'Credit Card': [4532015112830366, 379213112345678, 6011578504430710, 4539012387654321],
+    'CC Exp Date': ['01/25', '07/24', '12/26', '04/24']
+}
+
+# Create the DataFrame
+Df = pd.DataFrame(data)
+
+-------------------------------------------------------------------------------------------------------------------------
+Midterm exam :
+
+# 1. Importing required libraries
+import numpy as np
+import pandas as pd
+
+# 2. Reading the CSV file into a DataFrame
+ecom = pd.read_csv('Ecommerce Purchases.csv')
+
+# 3. Selecting the first 20 rows of the dataset
+ecom2 = ecom.head(20)
+
+# 4. Renaming 'ecom2' to 'Df' and dropping unnecessary columns
+Df = ecom2.drop(['Address', 'Browser Info', 'IP Address', 'Company', 'CC Security Code'], axis=1)
+
+# 5. Counting how many users have their language set to English
+Df[(Df['Language'] == 'en')].count()['Language']
+
+# 6. Counting how many purchases were made in AM vs PM
+Df["AM or PM"].value_counts()
+
+# 7. Getting the purchase amount for the person with license plate 'Lot: 46 in'
+Df[Df['Lot'] == "46 in"]['Purchase Price']
+
+# 8. Getting the email of the user with a specific credit card number
+ecom[ecom['Credit Card'] == 6011578504430710]['Email']
+
+# 9. Counting and summing transactions made using American Express cards over $95
+Df[(Df['CC Provider'] == 'American Express') & (Df['Purchase Price'] > 95)]['Purchase Price'].agg({'count', 'sum'})
+
+# 10. Counting subscribers with card expiration year = 2025
+Df['CC Exp Date'].apply(lambda x: x[3:] == '25').sum()
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+List of Possible questions :
+
+
+
+# 1. Get the average purchase price
+# ➤ Calculates the average amount of money spent in all purchases.
+Df['Purchase Price'].mean()
+
+# 2. Get the highest purchase price
+# ➤ Finds the most expensive single purchase in the data.
+Df['Purchase Price'].max()
+
+# 3. Get the lowest purchase price
+# ➤ Finds the cheapest purchase in the dataset.
+Df['Purchase Price'].min()
+
+# 4. Count how many users have the job title "Lawyer"
+# ➤ Filters users whose job is exactly "Lawyer" and counts them.
+Df[Df['Job'] == 'Lawyer'].shape[0]
+
+# 5. Count how many users use Gmail as their email provider
+# ➤ Checks if 'gmail' is in the email address and counts them.
+Df['Email'].apply(lambda x: 'gmail' in x).sum()
+
+# 6. Show all purchases over $90
+# ➤ Filters the rows where the purchase price is more than $90.
+Df[Df['Purchase Price'] > 90]
+
+# 7. Count users whose credit card starts with '4'
+# ➤ Credit cards starting with 4 are usually Visa cards. This counts them.
+Df['Credit Card'].astype(str).apply(lambda x: x.startswith('4')).sum()
+
+# 8. Show all users who paid exactly $75.50
+# ➤ Finds users who made a purchase with that exact amount.
+Df[Df['Purchase Price'] == 75.50]
+
+# 9. Count how many credit cards expire in 2024
+# ➤ Looks at the expiration date and checks if the year is '24'.
+Df['CC Exp Date'].apply(lambda x: x.endswith('24')).sum()
+
+# 10. Get a list of all unique job titles
+# ➤ Shows all different job names that exist in the dataset.
+Df['Job'].unique()
+
+
+
+# 21. Get the median purchase price
+# ➤ Calculates the median value of all purchases in the dataset.
+Df['Purchase Price'].median()
+
+# 22. Find users who have made more than 3 purchases
+# ➤ Filters users who made more than three purchases.
+Df.groupby('Email').filter(lambda x: len(x) > 3)
+
+# 23. Get the most common email domain
+# ➤ Extracts the email domain and finds the most frequent one.
+Df['Email'].apply(lambda x: x.split('@')[1]).mode()[0]
+
+# 24. Count how many purchases were made by users in the 'California' region
+# ➤ Filters by region and counts the number of purchases.
+Df[Df['Region'] == 'California'].shape[0]
+
+# 25. Find users who have the job title "Manager" and paid over $100
+# ➤ Filters users whose job is "Manager" and purchase price is over $100.
+Df[(Df['Job'] == 'Manager') & (Df['Purchase Price'] > 100)]
+
+# 26. Count how many users paid with MasterCard
+# ➤ Filters for 'MasterCard' provider and counts the number of users.
+Df[Df['CC Provider'] == 'MasterCard'].shape[0]
+
+# 27. Get the email addresses of users who purchased between $50 and $60
+# ➤ Filters for purchase prices in the $50-$60 range and extracts emails.
+Df[(Df['Purchase Price'] > 50) & (Df['Purchase Price'] < 60)]['Email']
+
+# 28. Count how many purchases were made by users aged 25-30
+# ➤ Filters users by age range and counts the number of purchases.
+Df[(Df['Age'] >= 25) & (Df['Age'] <= 30)].shape[0]
+
+# 29. Calculate the total sales for users who are 'Student'
+# ➤ Filters by job title and sums the purchase prices.
+Df[Df['Job'] == 'Student']['Purchase Price'].sum()
+
+# 30. Show the average purchase price for each region
+# ➤ Groups by region and calculates the average purchase price.
+Df.groupby('Region')['Purchase Price'].mean()
+
