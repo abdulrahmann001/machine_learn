@@ -20,6 +20,12 @@ data = {
 # Create the DataFrame
 Df = pd.DataFrame(data)
 
+
+#Create a ramdom dataframe
+
+df1 = pd.DataFrame(data=np.random.randint(1, 101, size=(5, 4)),
+index=['a', 'b', 'c', 'd', 'e'], columns=['x', 'y', 'z', 'w'])
+
 -------------------------------------------------------------------------------------------------------------------------
 Midterm exam :
 
